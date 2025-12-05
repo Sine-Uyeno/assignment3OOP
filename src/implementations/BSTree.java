@@ -1,5 +1,9 @@
 package implementations;
 
+import java.util.ArrayList;
+
+import utilities.Iterator;
+
 public class BSTree<E extends Comparable<? super E>>
 {
 	private BSTreeNode<E> head;
@@ -149,6 +153,20 @@ public class BSTree<E extends Comparable<? super E>>
 			parentNode = node;
 			node = node.getRight();
 		}
+	}
+	
+	private void inorderGrab(ArrayList<E> list, BSTreeNode<E> node) {
+        if (node == null)
+            return;
+        inorderGrab(list, node.getLeft());
+        list.add(node.getElement());
+        inorderGrab(list, node.getRight());
+	}
+	
+	public Iterator<E> inorderIterator() {
+		ArrayList<E> list = new ArrayList<E>();
+		inorderGrab(list, head);
+		return list.iterator();
 	}
 	
 }
