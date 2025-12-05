@@ -8,6 +8,11 @@ public class BSTree<E extends Comparable<? super E>>
 		head = null;
 	}
 	
+	public BSTree(E value) {
+		head = new BSTreeNode<E>();
+		head.setElement(value);
+	}
+	
 	public BSTreeNode<E> getRoot() throws NullPointerException {
 		if (head == null) throw new NullPointerException();
 		return head;
@@ -117,41 +122,31 @@ public class BSTree<E extends Comparable<? super E>>
 	}
 	
 	public BSTreeNode<E> removeMin() {
-		BSTreeNode<E> node = head;
-		BSTreeNode<E> returnNode;
-		if (node == null) return null;
-		if (getHeight() == 1) {
-			returnNode = head;
-			head = null;
-			return returnNode;
-		}
-		
+		if (head == null) return null;
+		BSTreeNode<E> parentNode = head;
+		BSTreeNode<E> node = parentNode.getLeft();
+
 		while (true) {
-			if (node.getLeft().getLeft() == null) {
-				returnNode = node.getLeft().getLeft();
-				node.setLeft(null);
-				return returnNode;
+			if (node.getLeft() == null) {
+				parentNode.setLeft(null);
+				return node;
 			}
+			parentNode = node;
 			node = node.getLeft();
 		}
 	}
 	
 	public BSTreeNode<E> removeMax() {
-		BSTreeNode<E> node = head;
-		BSTreeNode<E> returnNode;
-		if (node == null) return null;
-		if (getHeight() == 1) {
-			returnNode = head;
-			head = null;
-			return returnNode;
-		}
-		
+		if (head == null) return null;
+		BSTreeNode<E> parentNode = head;
+		BSTreeNode<E> node = parentNode.getRight();
+
 		while (true) {
-			if (node.getRight().getRight() == null) {
-				returnNode = node.getRight().getRight();
-				node.setRight(null);
-				return returnNode;
+			if (node.getRight() == null) {
+				parentNode.setRight(null);
+				return node;
 			}
+			parentNode = node;
 			node = node.getRight();
 		}
 	}

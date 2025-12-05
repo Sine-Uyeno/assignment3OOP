@@ -573,6 +573,7 @@ public class BSTreeTest
 	@Test
 	public void testRemoveMinNull()
 	{
+		System.out.println(tree.removeMin());
 		assertNull( "Failed to return null.", tree.removeMin() );
 	}
 
