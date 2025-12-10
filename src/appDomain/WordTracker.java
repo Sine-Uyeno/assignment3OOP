@@ -26,7 +26,7 @@ public class WordTracker {
 		Map<String, Integer> entries = new HashMap<>();
 		Integer lineNumber = 0;
 		Boolean repExists = false;
-		String option = "po";
+		String option = "pf";
 		
 		try (Scanner lineReader = new Scanner(file)) {
 	        while (lineReader.hasNextLine()) {
@@ -105,4 +105,5 @@ public class WordTracker {
 		}
 	}
 }
+
 
