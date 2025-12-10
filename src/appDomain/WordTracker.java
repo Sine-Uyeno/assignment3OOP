@@ -99,14 +99,14 @@ public class WordTracker {
 			case "-pl":
 				System.out.println("Displaying -pl format");
 				while(iterator.hasNext()) {
-					String key = iterator.next().replaceAll("\\p{Punct}", "");
+					String key = iterator.next();
 					System.out.println("Key : ===" + key + "===" + " found in file: " + file + " on lines: " + lineNumbers.get(key));
 				}
 				break;
 			case "-po":
 				System.out.println("Displaying -po format");
 				while (iterator.hasNext()) {
-					String key = iterator.next().replaceAll("\\p{Punct}", "");
+					String key = iterator.next();
 					System.out.println("Key : ===" + key + "=== number of entries: " + entries.get(key) + " found in file: " + file + " on lines: " + lineNumbers.get(key));
 				}
 				break;
