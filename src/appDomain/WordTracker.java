@@ -17,16 +17,16 @@ import implementations.BSTree;
 
 public class WordTracker {
 	public static void main(String[] args) throws ClassNotFoundException {
-		Scanner getFileName = new Scanner(System.in);
-		String fileName = getFileName.nextLine();
-		File file = new File(fileName);
+		File file = new File(args[0]);
 		BSTree<String> tree = new BSTree<String>();
 		ArrayList<String> treeList = new ArrayList<String>();
-		Map<Integer, Integer> lineNumbers = new HashMap<>();
+		Map<String, ArrayList<Integer>> lineNumbers = new HashMap<>();
+		
 		Map<String, Integer> entries = new HashMap<>();
 		Integer lineNumber = 0;
+		Integer lineCounter = 0;
 		Boolean repExists = false;
-		String option = "pf";
+		String option = args[1];
 		
 		try (Scanner lineReader = new Scanner(file)) {
 	        while (lineReader.hasNextLine()) {
@@ -39,11 +39,19 @@ public class WordTracker {
 		
 		try (Scanner fileReader = new Scanner(file)) {
 			while (fileReader.hasNextLine()) {
-				tree.add(fileReader.next().toLowerCase());
-				treeList.add(fileReader.next().toLowerCase());
-				for (String word : treeList) {
-					entries.put(word, entries.getOrDefault(word, 0) + 1);
+				lineCounter++;
+				String line = fileReader.nextLine().toLowerCase().replaceAll("\\p{Punct}", "");
+				for (String word : line.split(" ")) {
+					tree.add(word);
+					treeList.add(word);
+					ArrayList<Integer> cur = lineNumbers.getOrDefault(word, new ArrayList<Integer>());
+					cur.add(lineCounter);
+					lineNumbers.put(word, cur);
 				}
+			}
+			
+			for (String word : treeList) {
+				entries.put(word, entries.getOrDefault(word, 0) + 1);
 			}
 			
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("res/repository.ser"));
@@ -79,25 +87,27 @@ public class WordTracker {
 			}
 		}
 		
-		Iterator<String> iterator = tree.inorderIterator();
+		utilities.Iterator<String> iterator = tree.inorderIterator();
 		
 		switch(option) {
-			case "pf":
+			case "-pf":
 				System.out.println("Displaying -pf format");
 				while (iterator.hasNext()) {
 					System.out.println("Key : ===" + iterator.next().replaceAll("\\p{Punct}", "") + "===" + " found in file: " + file);
 				}
 				break;
-			case "pl":
+			case "-pl":
 				System.out.println("Displaying -pl format");
 				while(iterator.hasNext()) {
-					System.out.println("Key : ===" + iterator.next().replaceAll("\\p{Punct}", "") + "===" + " found in file: " + file + " on lines: " + lineNumbers.get(lineNumber));
+					String key = iterator.next().replaceAll("\\p{Punct}", "");
+					System.out.println("Key : ===" + key + "===" + " found in file: " + file + " on lines: " + lineNumbers.get(key));
 				}
 				break;
-			case "po":
+			case "-po":
 				System.out.println("Displaying -po format");
 				while (iterator.hasNext()) {
-					System.out.println("Key : ===" + iterator.next().replaceAll("\\p{Punct}", "") + "=== number of entries: " + entries.keySet() + " found in file: " + file + " on lines: " + lineNumber);
+					String key = iterator.next().replaceAll("\\p{Punct}", "");
+					System.out.println("Key : ===" + key + "=== number of entries: " + entries.get(key) + " found in file: " + file + " on lines: " + lineNumbers.get(key));
 				}
 				break;
 			default:
