@@ -25,9 +25,9 @@ public class WordTracker {
 		
 		try (Scanner fileReader = new Scanner(fileName)) {
 			while (fileReader.hasNextLine()) {
-//				if (fileReader.next().contains(",") || fileReader.next().contains(".") || fileReader.next().contains("!")) {
-//					tree.add(fileReader.next());
-//				}
+				//if (fileReader.next().contains(",") || fileReader.next().contains(".") || fileReader.next().contains("!")) {
+				//	tree.add(fileReader.next());
+				//}
 				tree.add(fileReader.next().toLowerCase());
 			}
 			
@@ -66,7 +66,7 @@ public class WordTracker {
 			}
 		}
 		
-		Iterator<String> iterator = tree.inorderIterator();
+		Iterator<String> iterator = (Iterator<String>) tree.inorderIterator();
 		
 		switch(option) {
 			case "pf":
