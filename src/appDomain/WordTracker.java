@@ -17,7 +17,9 @@ import implementations.BSTree;
 
 public class WordTracker {
 	public static void main(String[] args) throws ClassNotFoundException {
-		File file = new File("res/test1.txt");
+		Scanner getFileName = new Scanner(System.in);
+		String fileName = getFileName.nextLine();
+		File file = new File(fileName);
 		BSTree<String> tree = new BSTree<String>();
 		ArrayList<String> treeList = new ArrayList<String>();
 		Map<Integer, Integer> lineNumbers = new HashMap<>();
@@ -103,3 +105,4 @@ public class WordTracker {
 		}
 	}
 }
+
